@@ -27,8 +27,8 @@ function Mistweaver:IsSupported()
     return specIndex == 2 -- Mistweaver
 end
 
-return Mistweaver
-
 if HealIQ and HealIQ.Engine and HealIQ.Engine.RegisterSpec then
     HealIQ.Engine:RegisterSpec("Mistweaver", Mistweaver)
 end
+
+return Mistweaver

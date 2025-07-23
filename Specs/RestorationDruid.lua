@@ -157,8 +157,8 @@ function RestorationDruid:IsSupported()
     return specIndex == 4 -- Restoration
 end
 
-return RestorationDruid
-
 if HealIQ and HealIQ.Engine and HealIQ.Engine.RegisterSpec then
     HealIQ.Engine:RegisterSpec("RestorationDruid", RestorationDruid)
 end
+
+return RestorationDruid

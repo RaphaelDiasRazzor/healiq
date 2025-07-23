@@ -28,8 +28,8 @@ function HolyPriest:IsSupported()
     return specIndex == 2 -- Holy
 end
 
-return HolyPriest
-
 if HealIQ and HealIQ.Engine and HealIQ.Engine.RegisterSpec then
     HealIQ.Engine:RegisterSpec("HolyPriest", HolyPriest)
 end
+
+return HolyPriest

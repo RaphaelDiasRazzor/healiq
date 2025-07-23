@@ -27,8 +27,8 @@ function DisciplinePriest:IsSupported()
     return specIndex == 1 -- Discipline
 end
 
-return DisciplinePriest
-
 if HealIQ and HealIQ.Engine and HealIQ.Engine.RegisterSpec then
     HealIQ.Engine:RegisterSpec("DisciplinePriest", DisciplinePriest)
 end
+
+return DisciplinePriest

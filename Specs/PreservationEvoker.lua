@@ -27,8 +27,8 @@ function PreservationEvoker:IsSupported()
     return specIndex == 2 -- Preservation
 end
 
-return PreservationEvoker
-
 if HealIQ and HealIQ.Engine and HealIQ.Engine.RegisterSpec then
     HealIQ.Engine:RegisterSpec("PreservationEvoker", PreservationEvoker)
 end
+
+return PreservationEvoker
