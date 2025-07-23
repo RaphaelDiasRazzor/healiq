@@ -281,6 +281,9 @@ function HealIQ:OnEvent(event, ...)
             self:OnPlayerLogin()
         elseif event == "PLAYER_ENTERING_WORLD" then
             self:OnPlayerEnteringWorld()
+        elseif event == "PLAYER_SPECIALIZATION_CHANGED" then
+            local unit = args[1]
+            self:OnSpecializationChanged(unit)
         end
     end)
 end
@@ -325,11 +328,43 @@ function HealIQ:OnPlayerEnteringWorld()
     end)
 end
 
+function HealIQ:OnSpecializationChanged(unit)
+    self:SafeCall(function()
+        if unit ~= "player" then
+            return
+        end
+
+        local prevEnabled = self.db and self.db.enabled
+
+        local supported = HealIQ.Engine and HealIQ.Engine.IsSupportedSpec and HealIQ.Engine:IsSupportedSpec()
+        if supported then
+            self.db.enabled = true
+            self:DebugLog("Specialization changed - supported spec", "INFO")
+        else
+            self.db.enabled = false
+            self:DebugLog("Specialization changed - unsupported spec", "INFO")
+        end
+
+        if HealIQ.Engine and HealIQ.Engine.RefreshSpells then
+            HealIQ.Engine:RefreshSpells()
+        end
+
+        if prevEnabled ~= self.db.enabled then
+            if self.db.enabled then
+                self:Message("HealIQ enabled for supported spec")
+            else
+                self:Message("HealIQ disabled (unsupported spec)")
+            end
+        end
+    end)
+end
+
 -- Create event frame
 local eventFrame = CreateFrame("Frame")
 eventFrame:RegisterEvent("ADDON_LOADED")
 eventFrame:RegisterEvent("PLAYER_LOGIN")
 eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+eventFrame:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
 eventFrame:SetScript("OnEvent", function(self, event, ...)
     HealIQ:OnEvent(event, ...)
 end)

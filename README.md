@@ -11,6 +11,7 @@
 - Alerts for cooldown-based healing (e.g. Wild Growth, Tranquility)
 - Supports movement and configuration of suggestion UI
 - Shows upcoming suggestions in a queue display
+- Automatically detects specialization changes and loads the appropriate module
 - Provides extensive strategy customization options
 
 **Enhanced Strategy Features:**
