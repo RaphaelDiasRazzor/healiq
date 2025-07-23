@@ -1,6 +1,6 @@
 # HealIQ
 
-**HealIQ** is a smart spell suggestion addon for Restoration Druids in World of Warcraft. It helps you prioritize your next healing spell based on current combat context, active HoTs, procs, and cooldowns.
+**HealIQ** is a smart spell suggestion addon for healers in World of Warcraft. Originally built for Restoration Druids, it now includes basic support for multiple healing specializations through modular spec files. The addon helps you prioritize your next healing spell based on current combat context, active HoTs, procs, and cooldowns.
 
 ## 🧠 What It Does
 
@@ -11,6 +11,8 @@
 - Alerts for cooldown-based healing (e.g. Wild Growth, Tranquility)
 - Supports movement and configuration of suggestion UI
 - Shows upcoming suggestions in a queue display
+- Automatically detects specialization changes and loads the appropriate module
+- Specialization modules register themselves with the engine for seamless multi-spec support
 - Provides extensive strategy customization options
 
 **Enhanced Strategy Features:**
@@ -24,7 +26,7 @@
 
 **Note:** HealIQ provides visual suggestions only. Due to Blizzard restrictions, spell casting must be done manually using your normal keybinds or action bars.
 
-> HealIQ is inspired by Hekili, but for healing. Designed with Restoration Druids in mind, support for other healers may be added later.
+> HealIQ is inspired by Hekili, but for healing. It was designed with Restoration Druids in mind, but now includes experimental modules for other healing classes.
 
 ## 📦 Installation
 
@@ -67,6 +69,11 @@ Healing doesn’t follow a strict rotation, but there are patterns of optimal de
 ## 🛠 For Developers
 
 This addon is written in Lua using the WoW AddOn API.
+
+To add support for another healing specialization, create a file in `Specs/` that
+defines your spell table and an `IsSupported` method. At the end of the file,
+register the module with `HealIQ.Engine:RegisterSpec("YourSpecName", module)` so
+the core engine can load it automatically when the player swaps specs.
 
 Contributions and suggestions welcome via [Issues](https://github.com/djdefi/healiq/issues) and PRs.
 
