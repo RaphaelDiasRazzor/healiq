@@ -6,6 +6,16 @@ local addonName, HealIQ = ...
 HealIQ.Engine = {}
 local Engine = HealIQ.Engine
 
+-- Supported class specializations
+Engine.supportedSpecs = {
+    DRUID = {4},           -- Restoration
+    PRIEST = {1, 2},       -- Discipline, Holy
+    PALADIN = {1},         -- Holy
+    SHAMAN = {3},          -- Restoration
+    MONK = {2},            -- Mistweaver
+    EVOKER = {2},          -- Preservation
+}
+
 -- Targeting types and their associated icons
 -- Icon path constants
 local ICON_SELF = "Interface\\Icons\\Ability_Warrior_BattleShout"
@@ -249,20 +259,51 @@ function Engine:OnUpdate(elapsed)
         local suggestion = self:EvaluateRules()
         local queue = self:EvaluateRulesQueue()
         
+
         self:SetSuggestion(suggestion)
         self:SetQueue(queue)
     end)
 end
 
-function Engine:ShouldSuggest()
-    -- Only suggest if player is a Restoration Druid
+function Engine:IsSupportedSpec()
     local _, class = UnitClass("player")
-    if class ~= "DRUID" then
+    local specIndex = GetSpecialization()
+    local specs = self.supportedSpecs[class]
+    if not specs then
         return false
     end
-    
-    local specIndex = GetSpecialization()
-    if specIndex ~= 4 then -- Not Restoration
+    for _, idx in ipairs(specs) do
+        if idx == specIndex then
+            return true
+        end
+    end
+    return false
+end
+
+function Engine:GetActiveSpecModule()
+    if not HealIQ.Specs then
+        return nil
+    end
+    for _, mod in pairs(HealIQ.Specs) do
+        if type(mod.IsSupported) == "function" and mod:IsSupported() then
+            return mod
+        end
+    end
+    return nil
+end
+
+function Engine:RefreshSpells()
+    local mod = self:GetActiveSpecModule()
+    if mod and mod.SPELLS then
+        self.SPELLS = mod.SPELLS
+    else
+        self.SPELLS = self.defaultSpells
+    end
+end
+
+function Engine:ShouldSuggest()
+    -- Only suggest if player is using a supported spec
+    if not self:IsSupportedSpec() then
         return false
     end
     
@@ -1116,4 +1157,6 @@ end
 
 HealIQ.Engine = Engine
 HealIQ.Engine.TARGET_TYPES = TARGET_TYPES
+Engine.defaultSpells = SPELLS
+Engine.SPELLS = SPELLS
 HealIQ.Engine.SPELLS = SPELLS

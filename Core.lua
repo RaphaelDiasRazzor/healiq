@@ -302,26 +302,25 @@ function HealIQ:OnPlayerEnteringWorld()
             return
         end
         
-        -- Check if player is a Restoration Druid
-        local _, class = UnitClass("player")
-        if class == "DRUID" then
-            local specIndex = GetSpecialization()
-            if specIndex == 4 then -- Restoration spec
-                self:Print("Restoration Druid detected")
-                self:DebugLog("Restoration Druid detected - enabling addon", "INFO")
-                self.db.enabled = true
-                self:Message("HealIQ enabled for Restoration Druid")
-            else
-                self:Print("Not Restoration spec, addon disabled")
-                self:DebugLog("Not Restoration spec (spec: " .. (specIndex or "unknown") .. ") - disabling addon", "INFO")
-                self.db.enabled = false
-                self:Message("HealIQ disabled (not Restoration spec)")
+        -- Check if player is using a supported specialization
+        if HealIQ.Engine and HealIQ.Engine.IsSupportedSpec and HealIQ.Engine:IsSupportedSpec() then
+            self:Print("Supported specialization detected")
+            self:DebugLog("Supported spec detected - enabling addon", "INFO")
+            self.db.enabled = true
+            if HealIQ.Engine.RefreshSpells then
+                HealIQ.Engine:RefreshSpells()
             end
+            self:Message("HealIQ enabled for supported spec")
         else
-            self:Print("Not a Druid, addon disabled")
-            self:DebugLog("Not a Druid (class: " .. (class or "unknown") .. ") - disabling addon", "INFO")
+            local _, class = UnitClass("player")
+            local specIndex = GetSpecialization()
+            self:Print("Unsupported class/spec, addon disabled")
+            self:DebugLog("Unsupported spec (class: " .. tostring(class) .. ", spec: " .. tostring(specIndex) .. ") - disabling addon", "INFO")
             self.db.enabled = false
-            self:Message("HealIQ disabled (not a Druid)")
+            if HealIQ.Engine and HealIQ.Engine.RefreshSpells then
+                HealIQ.Engine:RefreshSpells()
+            end
+            self:Message("HealIQ disabled (unsupported spec)")
         end
     end)
 end
