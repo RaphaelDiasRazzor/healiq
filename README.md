@@ -1,6 +1,6 @@
 # HealIQ
 
-**HealIQ** is a smart spell suggestion addon for healers in World of Warcraft. Originally built for Restoration Druids, it now includes basic support for multiple healing specializations. The addon helps you prioritize your next healing spell based on current combat context, active HoTs, procs, and cooldowns.
+**HealIQ** is a smart spell suggestion addon for healers in World of Warcraft. Originally built for Restoration Druids, it now includes basic support for multiple healing specializations through modular spec files. The addon helps you prioritize your next healing spell based on current combat context, active HoTs, procs, and cooldowns.
 
 ## 🧠 What It Does
 

@@ -18,6 +18,7 @@ rules/OffensiveRules.lua
 Specs/HolyPriest.lua
 Specs/DisciplinePriest.lua
 Specs/HolyPaladin.lua
+Specs/RestorationDruid.lua
 Specs/RestorationShaman.lua
 Specs/Mistweaver.lua
 Specs/PreservationEvoker.lua
