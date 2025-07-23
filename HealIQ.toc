@@ -1,6 +1,6 @@
 ## Interface: 110107
 ## Title: HealIQ
-## Notes: Smart healing spell suggestion addon for Restoration Druids
+## Notes: Smart healing spell suggestion addon for healers (experimental multi-spec support)
 ## Author: djdefi
 ## Version: 0.1.4
 ## SavedVariables: HealIQDB
@@ -13,6 +13,15 @@ rules/HealingCooldowns.lua
 rules/UtilityRules.lua
 rules/AoERules.lua
 rules/OffensiveRules.lua
+
+# Spec modules
+Specs/HolyPriest.lua
+Specs/DisciplinePriest.lua
+Specs/HolyPaladin.lua
+Specs/RestorationDruid.lua
+Specs/RestorationShaman.lua
+Specs/Mistweaver.lua
+Specs/PreservationEvoker.lua
 
 # Core files
 Core.lua
