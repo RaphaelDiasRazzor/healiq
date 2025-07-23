@@ -28,3 +28,7 @@ function DisciplinePriest:IsSupported()
 end
 
 return DisciplinePriest
+
+if HealIQ and HealIQ.Engine and HealIQ.Engine.RegisterSpec then
+    HealIQ.Engine:RegisterSpec("DisciplinePriest", DisciplinePriest)
+end

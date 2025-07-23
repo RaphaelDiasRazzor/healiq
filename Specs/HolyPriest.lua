@@ -29,3 +29,7 @@ function HolyPriest:IsSupported()
 end
 
 return HolyPriest
+
+if HealIQ and HealIQ.Engine and HealIQ.Engine.RegisterSpec then
+    HealIQ.Engine:RegisterSpec("HolyPriest", HolyPriest)
+end

@@ -28,3 +28,7 @@ function RestorationShaman:IsSupported()
 end
 
 return RestorationShaman
+
+if HealIQ and HealIQ.Engine and HealIQ.Engine.RegisterSpec then
+    HealIQ.Engine:RegisterSpec("RestorationShaman", RestorationShaman)
+end

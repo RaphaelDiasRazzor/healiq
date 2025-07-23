@@ -12,6 +12,7 @@
 - Supports movement and configuration of suggestion UI
 - Shows upcoming suggestions in a queue display
 - Automatically detects specialization changes and loads the appropriate module
+- Specialization modules register themselves with the engine for seamless multi-spec support
 - Provides extensive strategy customization options
 
 **Enhanced Strategy Features:**
@@ -68,6 +69,11 @@ Healing doesn’t follow a strict rotation, but there are patterns of optimal de
 ## 🛠 For Developers
 
 This addon is written in Lua using the WoW AddOn API.
+
+To add support for another healing specialization, create a file in `Specs/` that
+defines your spell table and an `IsSupported` method. At the end of the file,
+register the module with `HealIQ.Engine:RegisterSpec("YourSpecName", module)` so
+the core engine can load it automatically when the player swaps specs.
 
 Contributions and suggestions welcome via [Issues](https://github.com/djdefi/healiq/issues) and PRs.
 

@@ -158,3 +158,7 @@ function RestorationDruid:IsSupported()
 end
 
 return RestorationDruid
+
+if HealIQ and HealIQ.Engine and HealIQ.Engine.RegisterSpec then
+    HealIQ.Engine:RegisterSpec("RestorationDruid", RestorationDruid)
+end

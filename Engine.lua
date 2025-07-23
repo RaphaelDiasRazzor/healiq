@@ -16,6 +16,17 @@ Engine.supportedSpecs = {
     EVOKER = {2},          -- Preservation
 }
 
+-- Table to hold registered spec modules
+Engine.specModules = {}
+
+-- Register a specialization support module
+function Engine:RegisterSpec(name, module)
+    if type(name) ~= "string" or type(module) ~= "table" then
+        return
+    end
+    self.specModules[name] = module
+end
+
 -- Targeting types and their associated icons
 -- Icon path constants
 local ICON_SELF = "Interface\\Icons\\Ability_Warrior_BattleShout"
@@ -153,12 +164,16 @@ function Engine:IsSupportedSpec()
 end
 
 function Engine:GetActiveSpecModule()
-    if not HealIQ.Specs then
-        return nil
-    end
-    for _, mod in pairs(HealIQ.Specs) do
+    for _, mod in pairs(self.specModules) do
         if type(mod.IsSupported) == "function" and mod:IsSupported() then
             return mod
+        end
+    end
+    if HealIQ.Specs then
+        for _, mod in pairs(HealIQ.Specs) do
+            if type(mod.IsSupported) == "function" and mod:IsSupported() then
+                return mod
+            end
         end
     end
     return nil
